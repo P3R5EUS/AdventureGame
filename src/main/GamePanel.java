@@ -53,8 +53,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public final int pauseState = 2;
 	public final int dialogueState = 3;
 	public final int interactState = 4;
-	public final int pokeState = 5;
-	public final int fightState = 6;
+	public final int characterState= 5;
 
 	//pokemons
 	public String pokename="";
@@ -90,7 +89,6 @@ public class GamePanel extends JPanel implements Runnable {
 		long currentTime;
 		long timer = 0;
 		int drawCount = 0;
-		int time = 1;
 
 		while(gameThread != null) {
 			currentTime = System.nanoTime();
@@ -100,20 +98,8 @@ public class GamePanel extends JPanel implements Runnable {
 
 			if(delta>=1) {
 				// Update information like player position
-				if(gameState == playState) {
-					time++;
-				}
 				update();
 				
-				//
-				if(time%600==0) {
-					time++;
-					gameState = pokeState;
-					
-					String pokenames[] = {"1","2","3","4"};
-					pokename = pokenames[(int)(Math.random()*4)];
-					
-				}
 				//draw the screen with updated info
 				repaint();
 				delta--;
@@ -140,7 +126,12 @@ public class GamePanel extends JPanel implements Runnable {
 			
 			for(int i=0;i<monster.length;i++) {
 				if(monster[i]!=null) {
-					monster[i].update();
+					if(monster[i].alive == true && monster[i].dying == false) {
+						monster[i].update();	
+					}
+					else if (monster[i].alive == false){
+						monster[i] = null;
+					}
 				}
 			}
 		}
@@ -200,9 +191,7 @@ public class GamePanel extends JPanel implements Runnable {
 			}
 			
 			//empty entity list
-			for(int i=0;i<entityList.size();i++) {
-				entityList.remove(i);
-			}
+			entityList.clear();
 			
 			//ui
 			ui.draw(g2);

@@ -82,16 +82,100 @@ public class UI {
 			drawDialogueScreen();
 		}
 		
-		if(gp.gameState == gp.pokeState) {
-			drawChoiceScreen();
-		}
-		
-		if(gp.gameState == gp.fightState) {
-			drawFightScreen();
+		//characterState
+		if(gp.gameState == gp.characterState) {
+			drawPlayerLife();
+			drawCharacterScreen();
 		}
 		
 	}
 	
+	private void drawCharacterScreen() {
+		final int frameX = gp.tileSize*2;
+		final int frameY = gp.tileSize;
+		final int frameWidth = gp.tileSize*5;
+		final int frameHeight = gp.tileSize*10;
+		
+		drawSubWindow(frameX,frameY,frameWidth,frameHeight);
+		
+		//text
+		g2.setColor(Color.white);
+		g2.setFont(g2.getFont().deriveFont(32F));
+		
+		int textX = frameX + 20 ;
+		int textY = frameY + gp.tileSize;
+		final int lineHeight = 37;
+		int tailX = (frameX+frameWidth) - 30;
+		String value;
+		int tailEnd = 0;
+		
+		//names
+		value = String.valueOf(gp.player.level);
+		tailEnd = getXforAlignToRightText(value,tailX);
+		g2.drawString(value, tailEnd, textY);
+		g2.drawString("Level", textX, textY);
+		textY+=lineHeight;
+		
+		
+		value = String.valueOf(gp.player.life)+" / "+String.valueOf(gp.player.maxLife);
+		tailEnd = getXforAlignToRightText(value,tailX);
+		g2.drawString(value, tailEnd, textY);
+		g2.drawString("Life", textX, textY);
+		textY+=lineHeight;
+		
+		value = String.valueOf(gp.player.strength);
+		tailEnd = getXforAlignToRightText(value,tailX);
+		g2.drawString(value, tailEnd, textY);
+		g2.drawString("Strength", textX, textY);
+		textY+=lineHeight;
+		
+		value = String.valueOf(gp.player.dexterity);
+		tailEnd = getXforAlignToRightText(value,tailX);
+		g2.drawString(value, tailEnd, textY);
+		g2.drawString("Dexterity", textX, textY);
+		textY+=lineHeight;
+		
+		value = String.valueOf(gp.player.attack);
+		tailEnd = getXforAlignToRightText(value,tailX);
+		g2.drawString(value, tailEnd, textY);
+		g2.drawString("Attack", textX, textY);
+		textY+=lineHeight;
+		
+		value = String.valueOf(gp.player.defense);
+		tailEnd = getXforAlignToRightText(value,tailX);
+		g2.drawString(value, tailEnd, textY);
+		g2.drawString("Defense", textX, textY);
+		textY+=lineHeight;
+		
+		value = String.valueOf(gp.player.exp);
+		tailEnd = getXforAlignToRightText(value,tailX);
+		g2.drawString(value, tailEnd, textY);
+		g2.drawString("Exp", textX, textY);
+		textY+=lineHeight;
+		
+		value = String.valueOf(gp.player.nextLevelExp);
+		tailEnd = getXforAlignToRightText(value,tailX);
+		g2.drawString(value, tailEnd, textY);
+		g2.drawString("Next Level", textX, textY);
+		textY+=lineHeight;
+		
+		value = String.valueOf(gp.player.coin);
+		tailEnd = getXforAlignToRightText(value,tailX);
+		g2.drawString(value, tailEnd, textY);
+		g2.drawString("Coin", textX, textY);
+		textY+=lineHeight-25;
+		
+		g2.drawImage(gp.player.currentWeapon.down1,tailX - gp.tileSize,textY,null );
+		textY+=40;
+		g2.drawString("Weapon", textX, textY);
+		textY+=lineHeight-25;
+		
+		g2.drawImage(gp.player.currentShield.down1,tailX - gp.tileSize,textY+8,null );
+		textY+=45;
+		g2.drawString("Shield", textX, textY);
+			
+	}
+
 	public void drawPlayerLife() {
 		int x = gp.tileSize/2;
 		int y = gp.tileSize/2;
@@ -171,60 +255,6 @@ public class UI {
 		}
 		
 	}
-	
-	public void drawChoiceScreen() {
-		g2.setColor(new Color(0,0,0));
-		g2.fillRect(0, 0, gp.screenWidth,gp.screenHeight);
-		
-		//title name
-		g2.setFont(g2.getFont().deriveFont(Font.BOLD,96F));
-		String text = "Wild "+gp.pokename+" has appeared";
-		int x = getXforCenteredText(text);
-		int y = 3*gp.tileSize;
-		
-		//shadow
-		g2.setColor(Color.darkGray);
-		g2.drawString(text,x+5,y+5);
-		
-		//main color
-		g2.setColor(Color.white);
-		g2.drawString(text, x, y);
-		
-		//blueboyimage
-		x = gp.screenWidth/2 - (gp.tileSize);
-		y += gp.tileSize*2;
-		g2.drawImage(gp.player.down1, x, y,2*gp.tileSize,2*gp.tileSize,null);
-	
-		//menu
-		g2.setFont(g2.getFont().deriveFont(Font.BOLD,48F));
-		text = "Run!";
-		x = getXforCenteredText(text);
-		y+=gp.tileSize*4;
-		g2.drawString(text, x, y);
-		if(commandNum == 0) {
-			g2.drawString(">", x-gp.tileSize, y);
-		}
-		
-		text = "Fight / Catch";
-		x = getXforCenteredText(text);
-		y+=gp.tileSize;
-		g2.drawString(text, x, y);
-		if(commandNum == 1) {
-			g2.drawString(">", x-gp.tileSize, y);
-		}
-		text = "QUIT";
-		x = getXforCenteredText(text);
-		y+=gp.tileSize;
-		g2.drawString(text, x, y);
-		if(commandNum == 2) {
-			g2.drawString(">", x-gp.tileSize, y);
-		}
-		
-	}
-	
-	public void drawFightScreen(){
-		
-	}
 		
 	public void drawDialogueScreen() {
 		if (currentDialogue.equals("-")) {
@@ -268,7 +298,6 @@ public class UI {
 		g2.drawString(text,x,y);
 	}
 	
-	
 	public void drawSubWindow(int x , int y , int width , int height) {
 		Color c = new Color(0,0,0,210);
 		g2.setColor(c);
@@ -297,4 +326,9 @@ public class UI {
 
 	}
 	
+	public int getXforAlignToRightText(String text, int tailX) {
+		int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
+		int x = tailX - length;
+		return x;
+	}
 }
