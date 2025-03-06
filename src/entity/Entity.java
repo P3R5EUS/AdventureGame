@@ -107,6 +107,11 @@ public class Entity {
 			if(gp.player.invincible == false) {
 				gp.player.life--;
 				gp.playSE(6);
+				
+				int damage = attack - gp.player.defense;
+				if(damage<0) {damage = 0;}
+				gp.player.life-=damage;
+			
 				gp.player.invincible = true;
 			}
 		}

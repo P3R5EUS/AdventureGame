@@ -1,6 +1,7 @@
 package main;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
@@ -145,6 +146,12 @@ public class GamePanel extends JPanel implements Runnable {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D)g;
 
+		//debug
+		long drawStart = 0;
+		if(keyH.showDebugText == true) {
+			drawStart = System.nanoTime();
+		}
+		
 		//title screen
 		if(gameState == titleState) {
 			ui.draw(g2);
@@ -196,6 +203,27 @@ public class GamePanel extends JPanel implements Runnable {
 			//ui
 			ui.draw(g2);
 		}
+		
+		//debug
+		if(keyH.showDebugText == true) {
+			long drawEnd = System.nanoTime();
+			long passed = drawEnd - drawStart;
+			g2.setFont(new Font("Arial",Font.PLAIN,20));
+			g2.setColor(Color.white);
+			int x = 10;
+			int y = 275;
+			int lineHeight = 20;
+			g2.drawString("WorldX : "+player.worldX, x, y);
+			y+=lineHeight;
+			g2.drawString("WorldY : "+player.worldY, x, y);
+			y+=lineHeight;
+			g2.drawString("Col : " +(player.worldX + player.solidArea.x)/tileSize , x, y);
+			y+=lineHeight;
+			g2.drawString("Row : " +(player.worldY + player.solidArea.y)/tileSize , x, y);
+			y+=lineHeight;
+			g2.drawString("Draw Time : " + passed,x,y);
+		}
+		g2.dispose();
 
 	}
 

@@ -9,6 +9,7 @@ public class KeyHandler implements KeyListener{
 		this.gp = gp;
 	}
 	public boolean UpPressed , DownPressed , RightPressed , LeftPressed,EnterPressed;
+	boolean showDebugText = false;
 	@Override
 	public void keyTyped(KeyEvent e) {
 	}
@@ -74,6 +75,18 @@ public class KeyHandler implements KeyListener{
 		}
 		if(code == KeyEvent.VK_C) {
 			gp.gameState = gp.characterState;
+		}
+		//debug
+		if(code == KeyEvent.VK_T) {
+			if(showDebugText == false) {
+				showDebugText = true;
+			}
+			else {
+				showDebugText = false;
+			}
+		}
+		if(code == KeyEvent.VK_R) {
+			gp.tileM.loadMap("/maps/worldV2.txt");
 		}
 	}
 	

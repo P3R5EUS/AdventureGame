@@ -13,8 +13,11 @@ public class MON_GreenSlime extends Entity{
 		type = 2;
 		name = "Green Slime";
 		speed = 1;
-		maxLife = 20;
+		maxLife = 5;
 		life = maxLife;
+		attack = 1/2;
+		defense = 0;
+		exp = 2;
 		
 		solidArea.x = 3;
 		solidArea.y = 18;
