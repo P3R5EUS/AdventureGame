@@ -21,6 +21,7 @@ public class Entity {
 	public int maxLife;
 	public int life;
 	public int level;
+	public int ammo;
 	public int strength;
 	public int dexterity;
 	public int attack;
@@ -30,11 +31,16 @@ public class Entity {
 	public int coin;
 	public Entity currentWeapon;
 	public Entity currentShield;
+	public int maxMana;
+	public int mana;
+	public Projectiles projectile;
+	
 
 	//ITEm ATTRIBUTES
 	public int attackValue;
 	public int defenseValue;
 	public String description = "";
+	public int useCost;
 	
 	public int worldX,worldY;
 	GamePanel gp;
@@ -57,7 +63,7 @@ public class Entity {
 	public int invincibleCounter = 0;
 	boolean hpBarOn = false;
 	int hpBarCounter = 0;
-	
+	public int shotAvailableCounter = 0;
 	//TYPE
 	public int type;// 0 = player , 1 = NPC , 2 = MONSTER
 	public final int type_player = 0;
@@ -100,6 +106,18 @@ public class Entity {
 		
 	}
 	
+	public void damagePlayer(int attack) {
+		if(gp.player.invincible == false) {
+			gp.player.life--;
+			gp.playSE(6);
+			
+			int damage = attack - gp.player.defense;
+			if(damage<0) {damage = 0;}
+			gp.player.life-=damage;
+		
+			gp.player.invincible = true;
+		}
+	}
 	//updates the images and positions of entities
 	public void update() {
 		setAction();
@@ -111,17 +129,9 @@ public class Entity {
 		gp.cChecker.checkEntity(this, gp.monster);
 		
 		if(this.type == type_monster && contactPlayer == true) {
-			if(gp.player.invincible == false) {
-				gp.player.life--;
-				gp.playSE(6);
-				
-				int damage = attack - gp.player.defense;
-				if(damage<0) {damage = 0;}
-				gp.player.life-=damage;
-			
-				gp.player.invincible = true;
-			}
+			damagePlayer(attack);
 		}
+		
 		
 		
 		if(collisionOn == false) {
@@ -154,6 +164,10 @@ public class Entity {
 				invincible = false;
 				invincibleCounter= 0;
 			}
+		}
+		
+		if(shotAvailableCounter<30) {
+			shotAvailableCounter++;
 		}
 	}
 	
@@ -200,7 +214,7 @@ public class Entity {
 			}
 			
 			//monster hp bar
-			if(type ==2 && hpBarOn == true) {
+			if(type ==type_monster && hpBarOn == true) {
 				double onScale = (double)(gp.tileSize/maxLife);
 				double hpBarValue = onScale*life;
 				
@@ -244,7 +258,6 @@ public class Entity {
 		if(dyingCounter >i*4 && dyingCounter<=i*5) {changeAlpha(g2,0f);}
 		if(dyingCounter >i*5 && dyingCounter<=i*6) {changeAlpha(g2,1f);}
 		if(dyingCounter > i*6) {
-			dying = false;
 			alive = false;
 		}
 	}

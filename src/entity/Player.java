@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import main.GamePanel;
 import main.KeyHandler;
+import object.OBJ_Fireball;
 import object.OBJ_Key;
 import object.OBJ_Shield_Wood;
 import object.OBJ_Sword_Normal;
@@ -19,10 +20,11 @@ public class Player extends Entity{
 	int standCounter = 0;
 	boolean moving = false;
 	int pixelCounter = 0;
-
+	public int maxMana = 4;
+	public int mana = maxMana;
+	
 	public ArrayList<Entity> inventory = new ArrayList<>();
 	public final int maxInventorySize = 20;
-	
 	public Player(GamePanel gp, KeyHandler keyH) {
 		super(gp);
 		this.keyH = keyH;
@@ -58,8 +60,11 @@ public class Player extends Entity{
 		coin = 0;
 		currentWeapon = new OBJ_Sword_Normal(gp);
 		currentShield = new OBJ_Shield_Wood(gp);
+		projectile = new OBJ_Fireball(gp);
+
 		attack = getAttack();
 		defense = getDefense();
+		
 	}
 	
 	public void setItems() {
@@ -173,12 +178,26 @@ public class Player extends Entity{
 			}
 		} 
 		
+		
+		if(gp.keyH.shotKeyPressed == true && shotAvailableCounter == 30 && projectile.haveResource(this)) {
+			//set default coordinates of projectile
+			projectile.set(worldX,worldY,direction,true,this);
+			projectile.subtractResource(this);
+			shotAvailableCounter = 0;
+			//add it to the list
+			gp.projectileList.add(projectile);
+			gp.playSE(9);
+		}
+		
 		if(invincible == true) {
 			invincibleCounter++;
 			if(invincibleCounter >60) {
 				invincible = false;
 				invincibleCounter= 0;
 			}
+		}
+		if(shotAvailableCounter<30) {
+			shotAvailableCounter++;
 		}
 	}
 	
@@ -188,7 +207,7 @@ public class Player extends Entity{
 			int damage = gp.monster[i].attack - defense;
 			if(damage<0) {damage = 0;}
 			
-			if(invincible == false) {
+			if(invincible == false && gp.monster[i].dying == false) {
 				life-=damage;
 				invincible = true;
 			}
@@ -221,9 +240,9 @@ public class Player extends Entity{
 			solidArea.width = attackArea.width;
 			solidArea.height = attackArea.height;
 			
-			//check monsgter collision with updates worldX, worldY and solid area
+			//check monster collision with updates worldX, worldY and solid area
 			int monsterIndex = gp.cChecker.checkEntity(this, gp.monster);
-			damageMonster(monsterIndex);
+			damageMonster(monsterIndex,attack);
 			
 			//after checking restore original data
 			worldX = currentWorldX;
@@ -238,7 +257,7 @@ public class Player extends Entity{
 		}
 	}
 
-	public void damageMonster(int monsterIndex) {
+	public void damageMonster(int monsterIndex , int attack) {
 		if(monsterIndex !=999) {
 			if(gp.monster[monsterIndex].invincible == false) {
 				gp.playSE(5);

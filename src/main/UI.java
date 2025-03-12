@@ -8,11 +8,11 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import entity.Entity;
 import object.OBJ_Heart;
+import object.OBJ_ManaCrystal;
 
 public class UI {
 	GamePanel gp;
@@ -29,7 +29,7 @@ public class UI {
 	public int commandNum = 0;
 	public int titleScreenState = 0;  //0:1st screen , 1:2ns Screen
 	
-	BufferedImage heart_full, heart_half, heart_blank;
+	BufferedImage heart_full, heart_half, heart_blank,crystal_full,crystal_blank;
 	
 	public int slotCol = 0;
 	public int slotRow = 0;
@@ -50,6 +50,10 @@ public class UI {
 		heart_full = heart.image;
 		heart_half = heart.image2;
 		heart_blank = heart.image3;
+		
+		Entity crystal= new OBJ_ManaCrystal(gp);
+		crystal_full = crystal.image;
+		crystal_blank = crystal.image2;
 	}
 
 	public void addMessage(String text) {
@@ -200,7 +204,7 @@ public class UI {
 		final int frameX = gp.tileSize*2;
 		final int frameY = gp.tileSize;
 		final int frameWidth = gp.tileSize*5;
-		final int frameHeight = gp.tileSize*10;
+		final int frameHeight = gp.tileSize*11;
 		
 		drawSubWindow(frameX,frameY,frameWidth,frameHeight);
 		
@@ -227,6 +231,12 @@ public class UI {
 		tailEnd = getXforAlignToRightText(value,tailX);
 		g2.drawString(value, tailEnd, textY);
 		g2.drawString("Life", textX, textY);
+		textY+=lineHeight;
+		
+		value = String.valueOf(gp.player.mana)+" / "+String.valueOf(gp.player.maxMana);
+		tailEnd = getXforAlignToRightText(value,tailX);
+		g2.drawString(value, tailEnd, textY);
+		g2.drawString("Mana", textX, textY);
 		textY+=lineHeight;
 		
 		value = String.valueOf(gp.player.strength);
@@ -309,6 +319,27 @@ public class UI {
 			x+=gp.tileSize;
 			i++;
 		}
+		
+		//draw mana crystal
+		x = gp.tileSize/2;
+		y = (3*gp.tileSize)/2;
+		i = 0;
+		while(i<gp.player.maxMana) {
+			g2.drawImage(crystal_blank, x, y, null);
+			i++;
+			x+=gp.tileSize/1.5;
+		}
+		
+		//reset
+		x = gp.tileSize/2;
+		y = (3*gp.tileSize)/2;
+		i = 0;
+		while(i<gp.player.mana) {
+			g2.drawImage(crystal_full, x, y, null);
+			i++;
+			x+=gp.tileSize/1.5;
+		}
+		
 	}
 	
 	public void drawTitleScreen() {

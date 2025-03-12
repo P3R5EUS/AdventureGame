@@ -67,7 +67,7 @@ public class EventHandler {
 			gp.gameState = gameState;
 			gp.ui.currentDialogue = "You Drank Water. \n Your Life has been healed";
 			gp.player.life = gp.player.maxLife;
-			
+			gp.player.mana = gp.player.maxMana;
 			//when u rest , monsters respawn
 			gp.aSetter.setMonster();
 		}

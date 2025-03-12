@@ -8,7 +8,7 @@ public class KeyHandler implements KeyListener{
 	public KeyHandler(GamePanel gp) {
 		this.gp = gp;
 	}
-	public boolean UpPressed , DownPressed , RightPressed , LeftPressed,EnterPressed;
+	public boolean UpPressed , DownPressed , RightPressed , LeftPressed,EnterPressed,shotKeyPressed;
 	boolean showDebugText = false;
 	@Override
 	public void keyTyped(KeyEvent e) {
@@ -88,6 +88,9 @@ public class KeyHandler implements KeyListener{
 		if(code == KeyEvent.VK_R) {
 			gp.tileM.loadMap("/maps/worldV2.txt");
 		}
+		if(code == KeyEvent.VK_F) {
+			shotKeyPressed = true;
+		}
 	}
 	
 	public void pauseState(int code) {
@@ -147,6 +150,9 @@ public class KeyHandler implements KeyListener{
 		}
 		if(code == KeyEvent.VK_D) {
 			RightPressed = false;
+		}
+		if(code == KeyEvent.VK_F) {
+			shotKeyPressed = false;
 		}
 		
 
