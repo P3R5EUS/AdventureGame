@@ -41,6 +41,7 @@ public class Entity {
 	public int defenseValue;
 	public String description = "";
 	public int useCost;
+	public int value;
 	
 	public int worldX,worldY;
 	GamePanel gp;
@@ -73,7 +74,7 @@ public class Entity {
 	public final int type_axe = 4;
 	public final int type_shield = 5;
 	public final int type_consumable = 6;
-	
+	public final int type_pickUpOnly = 7;
 	//character status
 	public boolean alive = true;
 	public boolean dying =false;
@@ -106,6 +107,20 @@ public class Entity {
 		
 	}
 	
+	public void checkDrop() {
+		
+	}
+	
+	public void dropItem(Entity droppedItem) {
+		for(int i = 0;i<gp.obj.length;i++) {
+			if(gp.obj[i]==null) {
+				gp.obj[i] = droppedItem;
+				gp.obj[i].worldX = worldX;
+				gp.obj[i].worldY = worldY;
+				break;
+			}
+		}
+	}
 	public void damagePlayer(int attack) {
 		if(gp.player.invincible == false) {
 			gp.player.life--;
@@ -238,7 +253,7 @@ public class Entity {
 			if(dying == true) {
 				dyingAnimation(g2);
 			}
-			g2.drawImage(image,screenX,screenY,gp.tileSize,gp.tileSize,null);
+			g2.drawImage(image,screenX,screenY,null);
 			changeAlpha(g2,1F);
 		}
 

@@ -3,7 +3,9 @@ package main;
 import entity.NPC_Oldman;
 import monster.MON_GreenSlime;
 import object.OBJ_Axe;
-import object.OBJ_Key;
+import object.OBJ_Coin_Bronze;
+import object.OBJ_Heart;
+import object.OBJ_ManaCrystal;
 import object.OBJ_Potion_Red;
 import object.OBJ_Shield_Blue;
 
@@ -16,15 +18,15 @@ public class AssetSetter {
 
 	public void setObject() {
 		int i = 0;
-		gp.obj[i] = new OBJ_Key(gp);
+		gp.obj[i] = new OBJ_Coin_Bronze(gp);
 		gp.obj[i].worldX = gp.tileSize*25;
 		gp.obj[i].worldY = 19*gp.tileSize;
 		i++;
-		gp.obj[i] = new OBJ_Key(gp);
+		gp.obj[i] = new OBJ_Heart(gp);
 		gp.obj[i].worldX = gp.tileSize*21;
 		gp.obj[i].worldY = gp.tileSize*19;
 		i++;
-		gp.obj[i] = new OBJ_Key(gp);
+		gp.obj[i] = new OBJ_ManaCrystal(gp);
 		gp.obj[i].worldX = gp.tileSize*21;
 		gp.obj[i].worldY = gp.tileSize*21;
 		i++;

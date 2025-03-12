@@ -20,8 +20,6 @@ public class Player extends Entity{
 	int standCounter = 0;
 	boolean moving = false;
 	int pixelCounter = 0;
-	public int maxMana = 4;
-	public int mana = maxMana;
 	
 	public ArrayList<Entity> inventory = new ArrayList<>();
 	public final int maxInventorySize = 20;
@@ -58,6 +56,8 @@ public class Player extends Entity{
 		exp = 0;
 		nextLevelExp = 5;
 		coin = 0;
+		maxMana = 4;
+		mana = maxMana;
 		currentWeapon = new OBJ_Sword_Normal(gp);
 		currentShield = new OBJ_Shield_Wood(gp);
 		projectile = new OBJ_Fireball(gp);
@@ -179,7 +179,7 @@ public class Player extends Entity{
 		} 
 		
 		
-		if(gp.keyH.shotKeyPressed == true && shotAvailableCounter == 30 && projectile.haveResource(this)) {
+		if(gp.keyH.shotKeyPressed == true && projectile.alive == false && shotAvailableCounter == 30 && projectile.haveResource(this)) {
 			//set default coordinates of projectile
 			projectile.set(worldX,worldY,direction,true,this);
 			projectile.subtractResource(this);
@@ -198,6 +198,13 @@ public class Player extends Entity{
 		}
 		if(shotAvailableCounter<30) {
 			shotAvailableCounter++;
+		}
+		
+		if(life>maxLife) {
+			life = maxLife; 
+		}
+		if(mana>maxMana) {
+			mana = maxMana; 
 		}
 	}
 	
@@ -299,7 +306,17 @@ public class Player extends Entity{
 
 	public void pickUpObject(int i) {
 		if(i!=999) {
-			String text ;
+			
+			//pickup only items
+			if(gp.obj[i].type ==type_pickUpOnly) {
+				
+				gp.obj[i].use(this);
+				gp.obj[i]= null;
+			}
+			
+			// inventory items
+			else{
+				String text ;
 			if(inventory.size()!= maxInventorySize) {
 				inventory.add(gp.obj[i]);
 				gp.playSE(1);
@@ -309,6 +326,7 @@ public class Player extends Entity{
 			}
 			gp.ui.addMessage(text);
 			gp.obj[i] = null;
+			}	
 		}
 	}
 
