@@ -17,7 +17,6 @@ public class Entity {
 	
 	//charcter attributes
 	public String name;
-	public int type;
 	public int speed;
 	public int maxLife;
 	public int life;
@@ -35,6 +34,7 @@ public class Entity {
 	//ITEm ATTRIBUTES
 	public int attackValue;
 	public int defenseValue;
+	public String description = "";
 	
 	public int worldX,worldY;
 	GamePanel gp;
@@ -58,10 +58,17 @@ public class Entity {
 	boolean hpBarOn = false;
 	int hpBarCounter = 0;
 	
-	// 0 = player , 1 = NPC , 2 = MONSTER
+	//TYPE
+	public int type;// 0 = player , 1 = NPC , 2 = MONSTER
+	public final int type_player = 0;
+	public final int type_npc = 1;
+	public final int type_monster = 2;
+	public final int type_sword = 3;
+	public final int type_axe = 4;
+	public final int type_shield = 5;
+	public final int type_consumable = 6;
 	
 	//character status
-	
 	public boolean alive = true;
 	public boolean dying =false;
 	int dyingCounter = 0;
@@ -103,7 +110,7 @@ public class Entity {
 		gp.cChecker.checkEntity(this, gp.npc);
 		gp.cChecker.checkEntity(this, gp.monster);
 		
-		if(this.type == 2 && contactPlayer == true) {
+		if(this.type == type_monster && contactPlayer == true) {
 			if(gp.player.invincible == false) {
 				gp.player.life--;
 				gp.playSE(6);
@@ -261,4 +268,6 @@ public class Entity {
 		}
 
 	}
+	
+	public void use(Entity entity) {}
 }

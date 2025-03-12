@@ -100,6 +100,29 @@ public class KeyHandler implements KeyListener{
 		if(code == KeyEvent.VK_C) {
 			gp.gameState = gp.playState;
 		}
+		if(code == KeyEvent.VK_W) {
+			if(gp.ui.slotRow == 0)
+				gp.ui.slotRow = 4;
+			gp.ui.slotRow = (gp.ui.slotRow-1)%4;
+			gp.playSE(8);
+		}
+		if(code == KeyEvent.VK_A) {
+			if(gp.ui.slotCol== 0)
+				gp.ui.slotCol = 5;
+			gp.ui.slotCol = (gp.ui.slotCol-1)%5;
+			gp.playSE(8);
+		}
+		if(code == KeyEvent.VK_S) {
+			gp.ui.slotRow = (gp.ui.slotRow+1)%4;
+			gp.playSE(8);
+		}
+		if(code == KeyEvent.VK_D) {
+			gp.ui.slotCol = (gp.ui.slotCol+1)%5;
+			gp.playSE(8);
+		}
+		if(code == KeyEvent.VK_ENTER) {
+			gp.player.selectItem();
+		}
 	}
 
 	public void dialogueState(int code) {
