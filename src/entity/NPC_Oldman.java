@@ -1,5 +1,6 @@
 package entity;
 
+import java.awt.Rectangle;
 import java.util.Random;
 
 import main.GamePanel;
@@ -7,10 +8,17 @@ import main.GamePanel;
 public class NPC_Oldman extends Entity {
 	public NPC_Oldman(GamePanel gp) {
 		super(gp);
-
+		
 		direction = "down";
 		speed = 1;
-
+		
+		solidArea = new Rectangle();
+		solidArea.x = 8;
+		solidArea.y = 16;
+		solidAreaDefaultX = solidArea.x;
+		solidAreaDefaultY = solidArea.y;
+		solidArea.width = 32;
+		solidArea.height = 32;
 		getImage();
 		setDialogue();
 	}

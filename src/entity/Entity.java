@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
@@ -42,6 +43,9 @@ public class Entity {
 	public String description = "";
 	public int useCost;
 	public int value;
+	public ArrayList<Entity> inventory = new ArrayList<>();
+	public final int maxInventorySize = 20;
+	public int price;
 	
 	public int worldX,worldY;
 	GamePanel gp;
@@ -112,11 +116,11 @@ public class Entity {
 	}
 	
 	public void dropItem(Entity droppedItem) {
-		for(int i = 0;i<gp.obj.length;i++) {
-			if(gp.obj[i]==null) {
-				gp.obj[i] = droppedItem;
-				gp.obj[i].worldX = worldX;
-				gp.obj[i].worldY = worldY;
+		for(int i = 0;i<gp.obj[1].length;i++) {
+			if(gp.obj[gp.currentMap][i]==null) {
+				gp.obj[gp.currentMap][i] = droppedItem;
+				gp.obj[gp.currentMap][i].worldX = worldX;
+				gp.obj[gp.currentMap][i].worldY = worldY;
 				break;
 			}
 		}

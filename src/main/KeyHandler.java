@@ -32,6 +32,37 @@ public class KeyHandler implements KeyListener{
 		else if(gp.gameState == gp.optionsState) {optionsState(code);}
 		//gameover State
 		else if(gp.gameState == gp.gameoverState) {gameoverState(code);}
+		//trade State
+		else if(gp.gameState == gp.tradeState) {tradeState(code);}
+	}
+	
+	public void tradeState(int code) {
+		if(code == KeyEvent.VK_ENTER) {
+			EnterPressed = true;
+		}
+		if(gp.ui.substate == 0) {
+			if(code == KeyEvent.VK_W) {
+				gp.ui.commandNum = (gp.ui.commandNum+2)%3;
+			}
+			if(code == KeyEvent.VK_S) {
+				gp.ui.commandNum = (gp.ui.commandNum+1)%3;
+			}
+			gp.playSE(8);
+		}
+		
+		if(gp.ui.substate == 1) {
+			npcInventory(code);
+			if(code == KeyEvent.VK_ESCAPE) {
+				gp.ui.substate = 0;
+			}
+		}
+		if(gp.ui.substate == 2) {
+			playerInventory(code);
+			if(code == KeyEvent.VK_ESCAPE) {
+				gp.ui.substate = 0;
+			}
+		}
+		
 	}
 	public void gameoverState(int code) {
 		if(code == KeyEvent.VK_S) {
@@ -157,7 +188,10 @@ public class KeyHandler implements KeyListener{
 			}
 		}
 		if(code == KeyEvent.VK_R) {
-			gp.tileM.loadMap("/maps/worldV2.txt");
+			switch(gp.currentMap) {
+			case 0:gp.tileM.loadMap("/maps/worldV3.txt",0);break;
+			case 1:gp.tileM.loadMap("/maps/interior01.txt",1);break;
+			}
 		}
 		if(code == KeyEvent.VK_F) {
 			shotKeyPressed = true;
@@ -177,31 +211,59 @@ public class KeyHandler implements KeyListener{
 		if(code == KeyEvent.VK_C) {
 			gp.gameState = gp.playState;
 		}
-		if(code == KeyEvent.VK_W) {
-			if(gp.ui.slotRow == 0)
-				gp.ui.slotRow = 4;
-			gp.ui.slotRow = (gp.ui.slotRow-1)%4;
-			gp.playSE(8);
-		}
-		if(code == KeyEvent.VK_A) {
-			if(gp.ui.slotCol== 0)
-				gp.ui.slotCol = 5;
-			gp.ui.slotCol = (gp.ui.slotCol-1)%5;
-			gp.playSE(8);
-		}
-		if(code == KeyEvent.VK_S) {
-			gp.ui.slotRow = (gp.ui.slotRow+1)%4;
-			gp.playSE(8);
-		}
-		if(code == KeyEvent.VK_D) {
-			gp.ui.slotCol = (gp.ui.slotCol+1)%5;
-			gp.playSE(8);
-		}
+		
 		if(code == KeyEvent.VK_ENTER) {
 			gp.player.selectItem();
 		}
+		playerInventory(code);
 	}
-
+	
+	public void playerInventory(int code) {
+		if(code == KeyEvent.VK_W) {
+			if(gp.ui.playerslotRow == 0)
+				gp.ui.playerslotRow = 4;
+			gp.ui.playerslotRow = (gp.ui.playerslotRow-1)%4;
+			gp.playSE(8);
+		}
+		if(code == KeyEvent.VK_A) {
+			if(gp.ui.playerslotCol== 0)
+				gp.ui.playerslotCol = 5;
+			gp.ui.playerslotCol = (gp.ui.playerslotCol-1)%5;
+			gp.playSE(8);
+		}
+		if(code == KeyEvent.VK_S) {
+			gp.ui.playerslotRow = (gp.ui.playerslotRow+1)%4;
+			gp.playSE(8);
+		}
+		if(code == KeyEvent.VK_D) {
+			gp.ui.playerslotCol = (gp.ui.playerslotCol+1)%5;
+			gp.playSE(8);
+		}
+	}
+	
+	public void npcInventory(int code) {
+		if(code == KeyEvent.VK_W) {
+			if(gp.ui.npcslotRow == 0)
+				gp.ui.npcslotRow = 4;
+			gp.ui.npcslotRow = (gp.ui.npcslotRow-1)%4;
+			gp.playSE(8);
+		}
+		if(code == KeyEvent.VK_A) {
+			if(gp.ui.npcslotCol== 0)
+				gp.ui.npcslotCol = 5;
+			gp.ui.npcslotCol = (gp.ui.npcslotCol-1)%5;
+			gp.playSE(8);
+		}
+		if(code == KeyEvent.VK_S) {
+			gp.ui.npcslotRow = (gp.ui.npcslotRow+1)%4;
+			gp.playSE(8);
+		}
+		if(code == KeyEvent.VK_D) {
+			gp.ui.npcslotCol = (gp.ui.npcslotCol+1)%5;
+			gp.playSE(8);
+		}
+	}
+	
 	public void dialogueState(int code) {
 		if(code == KeyEvent.VK_ENTER) {
 			gp.gameState = gp.playState;
