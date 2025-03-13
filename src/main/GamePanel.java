@@ -1,6 +1,7 @@
 
 package main;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -8,12 +9,13 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.awt.Color;
+
 import javax.swing.JPanel;
 
 import entity.Entity;
 import entity.Player;
 import tile.TileManager;
+import tile_interactive.InteractiveTile;
 
 public class GamePanel extends JPanel implements Runnable {
 	//SCREEN SETTINGS
@@ -48,6 +50,8 @@ public class GamePanel extends JPanel implements Runnable {
 	ArrayList<Entity> entityList = new ArrayList<>();
 	public Entity monster[] = new Entity[20];
 	public ArrayList <Entity> projectileList = new ArrayList<>();
+	public InteractiveTile iTile[] = new InteractiveTile[50];
+	public ArrayList<Entity> particleList = new ArrayList<>();
 	
 	//GAME STATE:-
 	public int gameState;
@@ -75,6 +79,7 @@ public class GamePanel extends JPanel implements Runnable {
 		aSetter.setObject();
 		aSetter.setNPC();
 		aSetter.setMonster();
+		aSetter.setInteractiveTiles();
 		gameState = titleState; 
 		
 	}
@@ -150,6 +155,23 @@ public class GamePanel extends JPanel implements Runnable {
 					}
 				}
 			}
+			
+			for(int i=0;i<particleList.size();i++) {
+				if(particleList.get(i)!=null) {
+					if(particleList.get(i).alive == true) {
+						particleList.get(i).update();	
+					}
+					else if (particleList.get(i).alive == false){
+						particleList.remove(i);
+					}
+				}
+			}
+			
+			for(int i=0;i<iTile.length;i++) {
+				if(iTile[i]!=null) {
+					iTile[i].update();
+				}
+			}
 		}
 		if(gameState == pauseState) {
 			//nothing
@@ -175,6 +197,12 @@ public class GamePanel extends JPanel implements Runnable {
 			//tile draw
 			tileM.draw(g2);
 			
+			for(int i=0;i<iTile.length;i++) {
+				if(iTile[i]!=null) {
+					iTile[i].draw(g2);
+				}
+			}
+			
 			//add entities to the list
 			entityList.add(player);
 			for(int i = 0;i<npc.length;i++) {
@@ -198,6 +226,12 @@ public class GamePanel extends JPanel implements Runnable {
 			for(int i = 0;i<projectileList.size();i++) {
 				if(projectileList.get(i)!=null) {
 					entityList.add(projectileList.get(i));
+				}
+			}
+			
+			for(int i = 0;i<particleList.size();i++) {
+				if(particleList.get(i)!=null) {
+					entityList.add(particleList.get(i));
 				}
 			}
 			

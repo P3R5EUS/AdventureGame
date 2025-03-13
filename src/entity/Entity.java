@@ -139,10 +139,12 @@ public class Entity {
 		collisionOn = false;
 		gp.cChecker.checkTile(this);
 		gp.cChecker.checkObject(this, false);
-		boolean contactPlayer = gp.cChecker.checkPlayer(this);
 		gp.cChecker.checkEntity(this, gp.npc);
 		gp.cChecker.checkEntity(this, gp.monster);
+		gp.cChecker.checkEntity(this, gp.iTile);
 		
+		boolean contactPlayer = gp.cChecker.checkPlayer(this);
+
 		if(this.type == type_monster && contactPlayer == true) {
 			damagePlayer(attack);
 		}
@@ -298,4 +300,37 @@ public class Entity {
 	}
 	
 	public void use(Entity entity) {}
+	public Color getParticleColor() {
+		Color color =null;
+		return color;
+	}
+	
+	public int getparticleSize() {
+		int size = 0;
+		return size;
+	}
+	public int getParticleSpeed() {
+		int speed =0;
+		return speed;
+	}
+	public int getParticleMaxLife() {
+		int maxLife = 0;
+		return maxLife;
+	}
+	public void generateParticle(Entity generator, Entity target) {
+		Color color = generator.getParticleColor();
+		int size = generator.getparticleSize();
+		int speed = generator.getParticleSpeed();
+		int maxLife = generator.getParticleMaxLife();
+		
+		Particle p1 = new Particle(gp,generator,color,size,speed,maxLife,-2,-1);
+		gp.particleList.add(p1);
+		Particle p2 = new Particle(gp,generator,color,size,speed,maxLife,-2,1);
+		gp.particleList.add(p2);
+		Particle p3 = new Particle(gp,generator,color,size,speed,maxLife,2,-1);
+		gp.particleList.add(p3);
+		Particle p4 = new Particle(gp,generator,color,size,speed,maxLife,2,1);
+		gp.particleList.add(p4);
+	}
+
 }
