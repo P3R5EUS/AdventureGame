@@ -28,10 +28,59 @@ public class KeyHandler implements KeyListener{
 		else if(gp.gameState == gp.dialogueState) {dialogueState(code);}	
 		//character state
 		else if(gp.gameState == gp.characterState) {characterState(code);}
+		//options State
+		else if(gp.gameState == gp.optionsState) {optionsState(code);}
 	}
 	
-	
+	public void optionsState(int code) {
+		int maxCN = 2;
+		if(code == KeyEvent.VK_ESCAPE) {
+			gp.gameState = gp.playState;
+		}
+		if(code== KeyEvent.VK_ENTER) {
+			EnterPressed = true;
+		}
+		switch(gp.ui.substate) {
+		case 0:maxCN = 6;break;
+		case 3:maxCN = 2;break;
+		}
+		if(code == KeyEvent.VK_S) {
+			gp.playSE(8);
+			gp.ui.commandNum= (gp.ui.commandNum+1)%maxCN;
+		}
+		if(code == KeyEvent.VK_W) {
+			gp.playSE(8);
+			gp.ui.commandNum = (gp.ui.commandNum+maxCN-1)%maxCN;
+		}
+		if(code == KeyEvent.VK_A) {
+			if(gp.ui.substate == 0) {
+				if(gp.ui.commandNum==1) {
+					gp.music.volumeScale = (gp.music.volumeScale+5)%6;
+					gp.music.checkVolume();
+					gp.playSE(8);
+				}
+				if(gp.ui.commandNum==2) {
+					gp.sound.volumeScale = (gp.sound.volumeScale+5)%6;
+					gp.playSE(8);
+				}
+			}
+		}
+		if(code == KeyEvent.VK_D) {
+			if(gp.ui.substate == 0) {
+				if(gp.ui.commandNum==1) {
+					gp.music.volumeScale = (gp.music.volumeScale+1)%6;
+					gp.music.checkVolume();
+					gp.playSE(8);
+				}
+				if(gp.ui.commandNum==2) {
+					gp.sound.volumeScale = (gp.sound.volumeScale+1)%6;
+					gp.playSE(8);
+				}
+			}
+		}
+	}
 	public void titleState(int code) {
+		
 		if(code == KeyEvent.VK_S) {
 			gp.ui.commandNum= (gp.ui.commandNum+1)%3;
 		}
@@ -90,6 +139,9 @@ public class KeyHandler implements KeyListener{
 		}
 		if(code == KeyEvent.VK_F) {
 			shotKeyPressed = true;
+		}
+		if(code == KeyEvent.VK_ESCAPE) {
+			gp.gameState = gp.optionsState;
 		}
 	}
 	
