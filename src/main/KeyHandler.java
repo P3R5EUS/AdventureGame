@@ -30,8 +30,30 @@ public class KeyHandler implements KeyListener{
 		else if(gp.gameState == gp.characterState) {characterState(code);}
 		//options State
 		else if(gp.gameState == gp.optionsState) {optionsState(code);}
+		//gameover State
+		else if(gp.gameState == gp.gameoverState) {gameoverState(code);}
 	}
-	
+	public void gameoverState(int code) {
+		if(code == KeyEvent.VK_S) {
+			gp.playSE(8);
+			gp.ui.commandNum= (gp.ui.commandNum+1)%2;
+		}
+		if(code == KeyEvent.VK_W) {
+			gp.playSE(8);
+			gp.ui.commandNum = (gp.ui.commandNum+1)%2;
+		}
+		if(code == KeyEvent.VK_ENTER) {
+			if(gp.ui.commandNum == 0) {
+				gp.gameState = gp.playState;
+				gp.retry();
+			}
+			else if(gp.ui.commandNum == 1) {
+				gp.gameState = gp.titleState;
+				gp.stopMusic();
+				gp.restart();
+			}
+		}
+	}
 	public void optionsState(int code) {
 		int maxCN = 2;
 		if(code == KeyEvent.VK_ESCAPE) {
