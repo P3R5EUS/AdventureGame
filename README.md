@@ -1,7 +1,6 @@
 # Adventure Game
 
-A retro-style 2D adventure game with multiplayer functionality, built using Java. This game allows players to explore a pixelated world, interact with objects, and engage in multiplayer gameplay via Java Sockets.
-
+A retro-style 2D adventure game with multiplayer functionality, built using Java. This game allows players to explore a pixelated world and interact with objects.
 ## Features
 
 - **Single-player and Multiplayer Modes** - Play solo or connect with other players over a network.
