@@ -27,25 +27,6 @@ A retro-style 2D adventure game with multiplayer functionality, built using Java
 - **Game Loop** - Ensures smooth frame updates for animation, movement, and logic.
 - **Event-driven Programming** - Handles player input, NPC interactions, and item usage.
 
-## Installation
-
-### Prerequisites
-- Java 11 or later
-- Git
-
-### Clone the Repository
-```sh
-git clone https://github.com/P3R5EUS/AdventureGame.git
-cd AdventureGame
-```
-
-### Running the Game
-#### Single-player Mode
-Run the main class in your IDE or use the command:
-```sh
-java -jar AdventureGame.jar
-```
-
 #### Multiplayer Mode
 **Start the Server:**
 ```sh
@@ -86,13 +67,6 @@ java -cp bin com.game.client.GameClient
 ### Game Events & Triggers:
 - Players can activate hidden events by interacting with objects or NPCs.
 - Certain areas may unlock upon completing specific tasks.
-
-## Contributing
-1. Fork the repository
-2. Create a new branch (`git checkout -b feature-branch`)
-3. Commit your changes (`git commit -m 'Add new feature'`)
-4. Push to the branch (`git push origin feature-branch`)
-5. Open a pull request
 
 ## License
 This project is licensed under the MIT License.
