@@ -76,6 +76,6 @@ For any inquiries, feel free to reach out via GitHub Issues.
 
 ## Team Members
 1. Panshull Choudhary - [P3R5EUS](https://github.com/P3R5EUS)
-2. Vanshika Agarwal - [vanshikagarwal15](https://github.com/vanshikagrawal15)
+2. Vanshika Agrawal - [vanshikagrawal15](https://github.com/vanshikagrawal15)
 3. Atharva Rai - [AtharvaRai-ctrl](https://github.com/AtharvaRai-ctrl)
 
