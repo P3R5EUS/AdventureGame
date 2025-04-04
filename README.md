@@ -79,3 +79,7 @@ For any inquiries, feel free to reach out via GitHub Issues.
 2. Vanshika Agrawal - [vanshikagrawal15](https://github.com/vanshikagrawal15)
 3. Atharva Rai - [AtharvaRai-ctrl](https://github.com/AtharvaRai-ctrl)
 
+Some glimpses from our project :
+![Player Attacking with fireBall](res/attack.png)
+![Player MarketPlace Interface](res/buy-sell.png)
+![Player fighting with monsters](res/monster.png)
